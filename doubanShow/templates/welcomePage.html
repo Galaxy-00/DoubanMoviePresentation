@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+<h1>{% block subtitle %}Welcome Page{% endblock %}</h1>
+
+{% block header %}
+<a class="action" href="{{ url_for('show.dynData') }}">动态数据</a>
+<a class="action" href="{{ url_for('show.get_bar') }}">柱状图</a>
+{% endblock %}
+
+</html>
