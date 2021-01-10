@@ -8,10 +8,13 @@
 {% endblock %}
 
 {% block content %}
+
 <body>
     <div id="bar" style="width:1000px; height:600px;"></div>
     <script>
-        var chart = echarts.init(document.getElementById('bar'), 'white', {renderer: 'canvas'});
+        var chart = echarts.init(document.getElementById('bar'), 'white', {
+            renderer: 'canvas'
+        });
         var old_data = [];
         $(
             function () {
@@ -23,7 +26,7 @@
         function fetchData() {
             $.ajax({
                 type: "GET",
-                url: "http://127.0.0.1:5000/show/lineChart",
+                url: "/api/lineChart",
                 dataType: "json",
                 success: function (result) {
                     chart.setOption(result);
@@ -35,17 +38,18 @@
         function getDynamicData() {
             $.ajax({
                 type: "GET",
-                url: "http://127.0.0.1:5000/show/lineDynamicData",
+                url: "/api/lineDynamicData",
                 dataType: "json",
                 success: function (result) {
                     old_data.push([result.name, result.value]);
                     chart.setOption({
-                        series: [{data: old_data}]
+                        series: [{
+                            data: old_data
+                        }]
                     });
                 }
             });
         }
-
     </script>
 </body>
 {% endblock %}
