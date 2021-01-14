@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="UTF-8">
+
+<head>
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static',filename='images/favicon.ico') }}" />
+  <title>Data Table</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='datatable.css') }}"/>
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+
+  <style type="text/css">
+      * {
+        margin: 0px;
+        padding: 0px;
+        box-sizing: border-box;
+      }
+
+      body,
+      html {
+        height: 100%;
+        font-family: sans-serif;
+      }
+       ::-webkit-scrollbar{
+            width: 10px;
+           background-color: #000000;
+        }
+        ::-webkit-scrollbar-thumb{
+          background: linear-gradient(rgb(245, 210, 172),rgb(210, 167, 120));
+          border-radius: 5px;
+          transition: 1s;
+        }
+        ::-webkit-scrollbar-thumb:hover{
+          background: linear-gradient(rgb(245, 210, 172), rgb(137, 110, 79));
+        }
+
+      /*==================================================================
+    [ 表格宽度 ]*/
+      @font-face {
+        font-family: 'new-generation';
+        src: url('../../static/picture/shidaisong.ttf');
+      }
+
+      .back_ground{
+        background-size:contain;
+        width:100%;
+        height: auto;
+        position: absolute;
+      }
+
+      .header{
+          position: relative;
+          text-transform: uppercase;
+          font-weight: 600;
+          /*font-family: 'proxima-nova-condensed', Helvetica;*/
+          font-family: new-generation;
+          color: #cb9846;
+          /*#d3a778#f5db7e 35*/
+          text-align: center;
+          padding-top: 150px;
+      }
+
+      .header h1{
+          font-size: 45px;
+      }
+
+      .limiter {
+        width: 100%;
+        margin: 0 auto;
+        position: absolute;
+      }
+      /*---------------------------------------------*/
+
+      .container-table100 {
+        width: 100%;
+        min-height: 100vh;
+        /*max-height: 165vh;*/
+        /*background: rgba(33, 33, 5, 0.2);*/
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 0px, rgba(0, 0, 0, 0.3) 80px,rgba(0, 0, 0, 0.7) 200px,rgba(0, 0, 0, 1) 300px);
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        padding-top: 283px;
+        padding-bottom: 40px;
+        padding-left: 30px;
+        padding-right: 30px;
+      }
+
+            .button {
+          position: relative;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 30px;
+          font-size: 12px;
+          color: #FFFFFF;
+          letter-spacing: 1px;
+          text-decoration: none;
+          text-transform: uppercase;
+          padding: 10px 30px;
+          display: inline-block;
+          margin-left: calc((1000px - 30px*6*2)/(6*2)) /*20px*/;
+          margin-right: calc((1000px - 30px*6)/(6*2*2));
+          margin-bottom: 15px;
+      }
+
+      .wrap-table100 {
+        width: 100%;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th {
+        text-align: left;
+        font-weight: bold;
+        padding-right: 10px;
+      }
+
+      td {
+        font-weight: unset;
+        padding-right: 10px;
+      }
+      /*---------------------------------------------*/
+
+      .table100-head th {
+        padding-top: 18px;
+        padding-bottom: 18px;
+      }
+
+      .table100-body td {
+        padding-top: 16px;
+        padding-bottom: 16px;
+      }
+
+      /*==================================================================
+    [ Ver1 ]*/
+
+      .table100.ver1 th {
+        font-family: Lato-Bold;
+        font-size: 18px;
+        color: #000000;
+        line-height: 1.4;
+        background-color: rgb(210, 167, 120);
+      }
+
+      .table100.ver1 td {
+        font-family: Lato-Regular;
+        font-size: 15px;
+        color: rgb(196, 191, 174);
+        line-height: 1.4;
+      }
+      .table100.ver1 td:hover {
+        color: rgb(245, 219, 126);
+      }
+
+      .table100.ver1 .table100-body tr:nth-child(even) {
+        /*background-color: rgba(255,255,255,0.2);*/
+          background: rgba(23, 18, 9, 0.6);
+          /*#f8f6ff*/
+      }
+      .table100.ver1 .table100-body tr:nth-child(even):hover {
+          background: rgba(154, 154, 154, 0.3);
+      }
+      .table100.ver1 .table100-body tr:nth-child(odd) {
+        background-color: rgba(23, 18, 9, 0.8);
+          /*#f8f6ff*/
+      }
+      .table100.ver1 .table100-body tr:nth-child(odd):hover {
+          background: rgba(154, 154, 154, 0.3);
+      }
+      /*---------------------------------------------*/
+      /* 表格盒子样式 */
+
+      .table100.ver1 {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+        -moz-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+        -webkit-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+        -o-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+        -ms-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+      }
+
+      .table100.ver1 .ps__rail-y {
+        right: 5px;
+      }
+
+      .table100.ver1 .ps__rail-y::before {
+        background-color: #ebebeb;
+      }
+
+      .table100.ver1 .ps__rail-y .ps__thumb-y::before {
+        background-color: #cccccc;
+      }
+  /*---------------------------------------------*/
+  </style>
+</head>
+
+<body>
+  <img class="back_ground" src="{{ url_for('static',filename='picture/tableBanner.jpg') }}" width=100%>
+  <div class="limiter" >
+    <div class="container-table100">
+      <div class="wrap-table100">
+        <table id="example" class="display" style="width:100%">
+            <thead>
+                <tr>
+                    <th>电影</th>
+                    <th>年份</th>
+                    <th>类型</th>
+                    <th>地区</th>
+                    <th>评分</th>
+                    <th>打分人数</th>
+                </tr>
+            </thead>
+        </table>
+      </div>
+    </div>
+  </div>
+  <a class="button" href="http://127.0.0.1:5000"> ◁ BACK </a>
+  <div class="header">
+     <h1>清洗数据展示</h1>
+  </div>
+</body>
+
+<script>
+function setupData() {
+    $(document).ready(function () {
+        $('#example').DataTable({
+            "bPaginate": false, //翻页功能
+            // "sScrollY": 300,//规定表格高度，出现滚动条
+            // "bScrollInfinite": true, //是否启动初始化滚动条
+            "scrollY": "400px",
+            "ajax": {
+                "url": "{{ url_for('static',filename='data/data_show.txt') }}"+"?random="+Math.random(), // This works for a static file
+                // "url": "/api/json", // This now also works
+                "dataType": "json",
+                "contentType":"application/json"
+            },
+            "columns": [
+                {"data": "title",width:"30%"},
+                {"data": "year",width:"10%"},
+                {"data": "types",width:"20%"},
+                {"data": "release_region",width:"20%",overflow:"hidden"},
+                {"data": "rate",width:"10%"},
+                {"data": "rate_num",width:"10%"}
+            ]
+        });
+    });
+}
+
+$( window ).on( "load", setupData );
+</script>
+
+</html>

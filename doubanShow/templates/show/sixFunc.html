@@ -1,0 +1,209 @@
+{% extends 'base.html' %}
+
+<h1>{% block subtitle %}2019-2020冷门佳作{% endblock %}</h1>
+
+{% block header %}
+
+{% endblock %}
+
+{% block content %}
+
+    <style type="text/css">
+        #table{
+            width: 1200px;
+        }
+        #table div{
+            display: inline-block;
+        }
+        #box{
+            width: 1020px;
+            margin: 50px 100px;
+        }
+        #type{
+        }
+        #type li{
+            display: inline-block;
+        }
+        .select{
+            /*background-color: #cae6f6;*/
+        }
+        .name{
+            color: #cb9846
+        }
+        .country{
+            color: #f0efe7;
+            font-size: 12px;
+        }
+        .rate_num a{
+            display: inline-block;
+        }
+        .rate{
+            float: left;
+            color: #ffac2d;
+            font-size: 12px;
+        }
+        .num{
+            float: right;
+            color: #f0efe7;
+            font-size: 12px;
+        }
+    </style>
+    <div id="table">
+        <div id="type" style="width:1200px; height:700px;">
+            <div id="box">
+                <li class="select" style="width:200px; height:280px;">
+                    <div class="img" style="width: 150px; height: 200px">
+                        <img src="{{ url_for('static',filename='picture/func6/1.webp') }}" height="180px" width="128px"/>
+                    </div>
+                    <div class="name_box" style="width:128px; height:50px;">
+                        <a class="name">鬼滅の刃 兄妹の絆</a>
+                    </div>
+                    <div class="country_box" style="width:150px; height:25px;">
+                        <a class="country">日本</a>
+                    </div>
+                    <div class="rate_num" style="width:128px; height:25px;">
+                        <a class="rate">9.2</a>
+                        <a class="num">12060人评分</a>
+                    </div>
+                </li>
+                <li class="select" style="width:200px; height:280px;">
+                    <div class="img" style="width: 150px; height: 200px">
+                        <img src="{{ url_for('static',filename='picture/func6/2.webp') }}" height="180px" width="128px"/>
+                    </div>
+                    <div class="name_box" style="width:128px; height:50px;">
+                        <a class="name">多哥 Togo</a>
+                    </div>
+                    <div class="country_box" style="width:150px; height:25px;">
+                        <a class="country">美国</a>
+                    </div>
+                    <div class="rate_num" style="width:128px; height:25px;">
+                        <a class="rate">8.8</a>
+                        <a class="num">68121人评分</a>
+                    </div>
+                </li>
+                <li class="select" style="width:200px; height:280px;">
+                    <div class="img" style="width: 150px; height: 200px">
+                        <img src="{{ url_for('static',filename='picture/func6/3.webp') }}" height="180px" width="128px"/>
+                    </div>
+                    <div class="name_box" style="width:128px; height:50px;">
+                        <a class="name">克劳斯：圣诞节的秘密</a>
+                    </div>
+                    <div class="country_box" style="width:150px; height:25px;">
+                        <a class="country">西班牙 / 英国</a>
+                    </div>
+                    <div class="rate_num" style="width:128px; height:25px;">
+                        <a class="rate">8.7</a>
+                        <a class="num">36366人评分</a>
+                    </div>
+                </li>
+                <li class="select" style="width:200px; height:280px;">
+                    <div class="img" style="width: 150px; height: 200px">
+                        <img src="{{ url_for('static',filename='picture/func6/4.webp') }}" height="180px" width="128px"/>
+                    </div>
+                    <div class="name_box" style="width:128px; height:50px;">
+                        <a class="name">芝加哥七君子审判</a>
+                    </div>
+                    <div class="country_box" style="width:150px; height:25px;">
+                        <a class="country">美国 / 英国 / 印度</a>
+                    </div>
+                    <div class="rate_num" style="width:128px; height:25px;">
+                        <a class="rate">8.6</a>
+                        <a class="num">38139人评分</a>
+                    </div>
+                </li>
+                <li class="select" style="width:200px; height:280px;">
+                    <div class="img" style="width: 150px; height: 200px">
+                        <img src="{{ url_for('static',filename='picture/func6/5.webp') }}" height="180px" width="128px"/>
+                    </div>
+                    <div class="name_box" style="width:128px; height:50px;">
+                        <a class="name">给我翅膀</a>
+                    </div>
+                    <div class="country_box" style="width:150px; height:25px;">
+                        <a class="country">法国</a>
+                    </div>
+                    <div class="rate_num" style="width:128px; height:25px;">
+                        <a class="rate">8.7</a>
+                        <a class="num">21576人评分</a>
+                    </div>
+                </li>
+                <li class="select" style="width:200px; height:280px;">
+                    <div class="img" style="width: 150px; height: 200px">
+                        <img src="{{ url_for('static',filename='picture/func6/6.webp') }}" height="180px" width="128px"/>
+                    </div>
+                    <div class="name_box" style="width:128px; height:50px;">
+                        <a class="name">燃烧女子的肖像</a>
+                    </div>
+                    <div class="country_box" style="width:150px; height:25px;">
+                        <a class="country">法国</a>
+                    </div>
+                    <div class="rate_num" style="width:128px; height:25px;">
+                        <a class="rate">8.6</a>
+                        <a class="num">120301人评分</a>
+                    </div>
+                </li>
+                <li class="select" style="width:200px; height:280px;">
+                    <div class="img" style="width: 150px; height: 200px">
+                        <img src="{{ url_for('static',filename='picture/func6/7.webp') }}" height="180px" width="128px"/>
+                    </div>
+                    <div class="name_box" style="width:128px; height:50px;">
+                        <a class="name">教宗的承继</a>
+                    </div>
+                    <div class="country_box" style="width:150px; height:25px;">
+                        <a class="country">英国 / 意大利</a>
+                    </div>
+                    <div class="rate_num" style="width:128px; height:25px;">
+                        <a class="rate">8.6</a>
+                        <a class="num">41776人评分</a>
+                    </div>
+                </li>
+                <li class="select" style="width:200px; height:280px;">
+                    <div class="img" style="width: 150px; height: 200px">
+                        <img src="{{ url_for('static',filename='picture/func6/8.webp') }}" height="180px" width="128px"/>
+                    </div>
+                    <div class="name_box" style="width:128px; height:50px;">
+                        <a class="name">异乡人：上海的芥川龙之介</a>
+                    </div>
+                    <div class="country_box" style="width:150px; height:25px;">
+                        <a class="country">日本</a>
+                    </div>
+                    <div class="rate_num" style="width:128px; height:25px;">
+                        <a class="rate">8.6</a>
+                        <a class="num">11696人评分</a>
+                    </div>
+                </li>
+                <li class="select" style="width:200px; height:280px;">
+                    <div class="img" style="width: 150px; height: 200px">
+                        <img src="{{ url_for('static',filename='picture/func6/10.webp') }}" height="180px" width="128px"/>
+                    </div>
+                    <div class="name_box" style="width:128px; height:50px;">
+                        <a class="name">黑水</a>
+                    </div>
+                    <div class="country_box" style="width:150px; height:25px;">
+                        <a class="country">美国</a>
+                    </div>
+                    <div class="rate_num" style="width:128px; height:25px;">
+                        <a class="rate">8.5</a>
+                        <a class="num">90085人评分</a>
+                    </div>
+                </li>
+                <li class="select" style="width:200px; height:280px;">
+                    <div class="img" style="width: 150px; height: 200px">
+                        <img src="{{ url_for('static',filename='picture/func6/11.webp') }}" height="180px" width="128px"/>
+                    </div>
+                    <div class="name_box" style="width:128px; height:50px;">
+                        <a class="name">痛苦与荣耀</a>
+                    </div>
+                    <div class="country_box" style="width:150px; height:25px;">
+                        <a class="country">西班牙 / 法国</a>
+                    </div>
+                    <div class="rate_num" style="width:128px; height:25px;">
+                        <a class="rate">8.5</a>
+                        <a class="num">68121人评分</a>
+                    </div>
+                </li>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

@@ -1,0 +1,429 @@
+{% extends 'base.html' %}
+
+<h1>{% block subtitle %}评分高低与差异衡量质量{% endblock %}</h1>
+
+{% block header %}
+
+{% endblock %}
+
+{% block content %}
+
+    <style type="text/css">
+        #table{
+            width: 1200px;
+        }
+        #table div{
+            display: inline-block;
+        }
+        #main{
+            /*position: absolute;*/
+            width: 1200px;
+            margin: 50px auto;
+        }
+        #type{
+            /*position: relative;*/
+        }
+        #type a{
+            display: inline-block;
+        }
+        #number{
+            width: 1100px;
+            margin: 0px 80px;
+        }
+        #number a{
+            display: inline-block;
+        }
+    </style>
+  <!-- 为 ECharts 准备一个具备大小（宽高）-->
+    <div id="table">
+        <div class="chart" style="width:1000px; height:600px;">
+        <div id="type">
+            <a id="main" style="width: 1200px;height:500px;"></a>
+            <div id="number">
+                <a id="0" style="width: 200px;height:300px;"></a>
+                <a id="1" style="width: 200px;height:300px;"></a>
+                <a id="2" style="width: 200px;height:300px;"></a>
+                <a id="3" style="width: 200px;height:300px;"></a>
+                <a id="4" style="width: 200px;height:300px;"></a>
+                <a id="5" style="width: 200px;height:300px;"></a>
+                <a id="6" style="width: 200px;height:300px;"></a>
+            </div>
+        </div>
+    </div>
+
+
+    </div>
+    <script src="{{ url_for('static', filename='js/echarts.js') }}"></script>
+    <script type="text/javascript">
+		// 基于准备好的dom，初始化echarts实例
+		var myChart = echarts.init(document.getElementById('main'), 'dark');
+		$.get("/api/0json", function (data) {
+				window.console.log('start');
+				myChart.hideLoading();
+				var data_0=[]
+				var data_1=[]
+				var data_2=[]
+				var data_3=[]
+				var data_4=[]
+				var data_5=[]
+				var data_6=[]
+				j0=0;j1=0;j2=0;j3=0;j4=0;j5=0;j6=0;
+				for (i=0;i<data.length;i++){
+					if (data[i][2]==0){
+						data_0[j0]=data[i]
+						j0++
+					}else if (data[i][2]==1){
+						data_1[j1]=data[i]
+						j1++
+					} else if (data[i][2]==2){
+						data_2[j2]=data[i]
+						j2++
+					} else if (data[i][2]==3){
+						data_3[j3]=data[i]
+						j3++
+					} else if (data[i][2]==4){
+						data_4[j4]=data[i]
+						j4++
+					} else if (data[i][2]==5){
+						data_5[j5]=data[i]
+						j5++
+					} else {
+						data_6[j6]=data[i]
+						j6++
+					}
+				}
+				myChart.setOption(option_main={
+				    // background: rgba(),
+                    backgroundColor: 'rgba(47,47,47,0)',
+					title: {
+						text: '影片质量聚类分析表',
+						subtext: '',
+                        textStyle:{//图例文字的样式
+                            color:'#f0efe7',
+                            fontSize:20
+                        }
+					},
+					grid: {
+						left: '7%',
+						right: '7%',
+						bottom: '3%',
+						containLabel: true
+					},
+                    dataZoom: [
+                        {
+                            id: 'dataZoomX',
+                            type: 'inside',
+                            xAxisIndex: [0],
+                            filterMode: 'filter'
+                        }
+                    ],
+					tooltip: {
+						// trigger: 'axis',
+						showDelay: 1,
+						formatter: function (params) {
+							if (params.value.length > 2) {
+								return params.seriesName + ' :<br/>'
+								+ params.value[3] + ' ';
+							}
+							else {
+								return params.seriesName + ' :<br/>'
+								+ params.name + ' : '
+								+ params.value + ' ';
+							}
+						},
+						axisPointer: {
+							show: true,
+							type: 'cross',
+							lineStyle: {
+								type: 'dashed',
+								width: 1
+							}
+						}
+					},
+					toolbox: {
+						feature: {
+							dataZoom: {},
+							brush: {
+								type: ['rect', 'polygon', 'clear']
+							}
+						}
+					},
+					brush: {
+					},
+					legend: {
+						data: ['普通好片', '普通烂片', '一般好片', '超级好片',
+                            '及格线徘徊', '好评如潮', '超级烂片'],
+						left: 'center',
+                        textStyle:{//图例文字的样式
+                            color:'#f0efe7',
+                            fontSize:16
+                        }
+					},
+					xAxis: [
+						{
+							name: '评分',
+							type: 'value',
+                            color:'#f0efe7',
+							scale: true,
+							axisLabel: {
+								formatter: '{value}',
+                                color:'#f0efe7'
+							},
+							splitLine: {
+								show: true
+							}
+						}
+					],
+					yAxis: [
+						{
+							name: '标准差',
+							type: 'value',
+                            color:'#f0efe7',
+							scale: true,
+							axisLabel: {
+								formatter: '{value}',
+                                color:'#f0efe7'
+							},
+							splitLine: {
+								show: false
+							}
+						}
+					],
+					series: [
+						{
+							name: '普通好片',
+							type: 'scatter',
+							data: data_0
+						},
+						{
+							name: '普通烂片',
+							type: 'scatter',
+							data: data_1
+						},
+						{
+							name: '一般好片',
+							type: 'scatter',
+							data: data_2
+						},
+						{
+							name: '超级好片',
+							type: 'scatter',
+							data: data_3
+						},
+						{
+							name: '及格线徘徊',
+							type: 'scatter',
+							data: data_4
+						},
+						{
+							name: '好评如潮',
+							type: 'scatter',
+							data: data_5
+						},
+						{
+							name: '超级烂片',
+							type: 'scatter',
+							data: data_6
+						}
+					]
+				});
+			});
+    </script>
+    <script type="text/javascript">
+		// 基于准备好的dom，初始化echarts实例
+		var Chart_0 = echarts.init(document.getElementById('0'),'customed');
+		// 指定图表的配置项和数据
+		var option_0 = {
+				title: {
+					text: '普通好片 P型',
+					left: 'center',
+					top: 250,
+					textStyle: {
+						color: '#f0efe7'
+					}
+				},
+				xAxis: {
+					type: 'value'
+				},
+				yAxis: {
+					data: ['1', '2', '3', '4', '5']
+				},
+				series: [{
+					data: [0.00643543, 0.0308929,  0.30180652, 0.46935037, 0.19151653],
+					type: 'bar'
+				}]
+			};
+		// 使用刚指定的配置项和数据显示图表。
+		Chart_0.setOption(option_0);
+	</script>
+    <script type="text/javascript">
+		// 基于准备好的dom，初始化echarts实例
+		var Chart_1 = echarts.init(document.getElementById('1'),'customed');
+		// 指定图表的配置项和数据
+		var option_1 = {
+		    color: '#91cc75',
+				title: {
+					text: '普通烂片 b型',
+					left: 'center',
+					top: 250,
+					textStyle: {
+						color: '#f0efe7'
+					}
+				},
+				xAxis: {
+					type: 'value'
+				},
+				yAxis: {
+					data: ['1', '2', '3', '4', '5']
+				},
+				series: [{
+					data: [0.14732609, 0.31794701, 0.38806114, 0.10229348, 0.04436821],
+					type: 'bar'
+				}]
+			};
+		// 使用刚指定的配置项和数据显示图表。
+		Chart_1.setOption(option_1);
+	</script>
+    <script type="text/javascript">
+		// 基于准备好的dom，初始化echarts实例
+		var Chart_2 = echarts.init(document.getElementById('2'),'customed');
+		// 指定图表的配置项和数据
+		var option_2 = {
+		    color: '#fac858',
+				title: {
+					text: '一般好片 P型',
+					left: 'center',
+					top: 250,
+					textStyle: {
+						color: '#f0efe7'
+					}
+				},
+				xAxis: {
+					type: 'value'
+				},
+				yAxis: {
+					data: ['1', '2', '3', '4', '5']
+				},
+				series: [{
+					data: [0.01386546, 0.07034541, 0.44309775, 0.3544503, 0.1182235 ],
+					type: 'bar'
+				}]
+			};
+		// 使用刚指定的配置项和数据显示图表。
+		Chart_2.setOption(option_2);
+	</script>
+    <script type="text/javascript">
+		// 基于准备好的dom，初始化echarts实例
+		var Chart_3 = echarts.init(document.getElementById('3'),'customed');
+		// 指定图表的配置项和数据
+		var option_3 = {
+		    color:'#ee6666',
+				title: {
+					text: '超级好片 F型',
+					left: 'center',
+					top: 250,
+					textStyle: {
+						color: '#f0efe7'
+					}
+				},
+				xAxis: {
+					type: 'value'
+				},
+				yAxis: {
+					data: ['1', '2', '3', '4', '5']
+				},
+				series: [{
+					data: [0.00371429, 0.00757547, 0.08503235, 0.3393558, 0.56436927],
+					type: 'bar'
+				}]
+			};
+		// 使用刚指定的配置项和数据显示图表。
+		Chart_3.setOption(option_3);
+	</script>
+    <script type="text/javascript">
+		// 基于准备好的dom，初始化echarts实例
+		var Chart_4 = echarts.init(document.getElementById('4'),'customed');
+		// 指定图表的配置项和数据
+		var option_4 = {
+		    color: '#73c0de',
+				title: {
+					text: '及格线徘徊 D型',
+					left: 'center',
+					top: 250,
+					textStyle: {
+						color: '#f0efe7'
+					}
+				},
+				xAxis: {
+					type: 'value'
+				},
+				yAxis: {
+					data: ['1', '2', '3', '4', '5']
+				},
+				series: [{
+					data: [0.03292326, 0.15777037, 0.52849435, 0.21395062, 0.066837],
+					type: 'bar'
+				}]
+			};
+		// 使用刚指定的配置项和数据显示图表。
+		Chart_4.setOption(option_4);
+	</script>
+    <script type="text/javascript">
+		// 基于准备好的dom，初始化echarts实例
+		var Chart_5 = echarts.init(document.getElementById('5'),'customed');
+		// 指定图表的配置项和数据
+		var option_5 = {
+		    color:'#3ba272',
+				title: {
+					text: '好评如潮 P型',
+					left: 'center',
+					top: 250,
+					textStyle: {
+						color: '#f0efe7'
+					}
+				},
+				xAxis: {
+					type: 'value'
+				},
+				yAxis: {
+					data: ['1', '2', '3', '4', '5']
+				},
+				series: [{
+					data: [0.00394205, 0.01398336, 0.164358, 0.47561388, 0.34209639],
+					type: 'bar'
+				}]
+			};
+		// 使用刚指定的配置项和数据显示图表。
+		Chart_5.setOption(option_5);
+	</script>
+    <script type="text/javascript">
+		// 基于准备好的dom，初始化echarts实例
+		var Chart_6 = echarts.init(document.getElementById('6'),'customed');
+		// 指定图表的配置项和数据
+		var option_6 = {
+		    color: ['#fc8452'],
+				title: {
+					text: '超级烂片 L型',
+					left: 'center',
+					top: 250,
+					textStyle: {
+						color: '#f0efe7'
+					}
+				},
+				xAxis: {
+					type: 'value',
+                    color: '#f0efe7'
+				},
+				yAxis: {
+					data: ['1', '2', '3', '4', '5']
+				},
+				series: [{
+					data: [0.49969962, 0.27747529, 0.15704563, 0.0348289, 0.03096958],
+					type: 'bar'
+				}]
+			};
+		// 使用刚指定的配置项和数据显示图表。
+		Chart_6.setOption(option_6);
+	</script>
+{% endblock %}
+

@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+
+<h1>{% block subtitle %}各类型电影平均质量{% endblock %}</h1>
+
+{% block header %}
+
+{% endblock %}
+
+{% block content %}
+    <style type="text/css">
+        #table{
+            width: 1200px;
+        }
+        #table div{
+            display: inline-block;
+        }
+        #bar {
+            width: 1200px;
+            margin: 50px auto;
+        }
+        #type{
+        }
+        #type a{
+            display: inline-block;
+        }
+    </style>
+    <div id="table">
+        <div id="type">
+            <a id="bar" style="width:1200px; height:500px;"></a>
+        </div>
+    </div>
+    <script>
+        var myChart = echarts.init(document.getElementById('bar'),'customed')
+
+        option = {
+            title: {
+                text: "2019-2020热门类型电影平均质量（得分）"
+            },
+            "animation": true,
+            "animationThreshold": 2000,
+            "animationDuration": 1000,
+            "animationEasing": "cubicOut",
+            "animationDelay": 0,
+            "animationDurationUpdate": 300,
+            "animationEasingUpdate": "cubicOut",
+            "animationDelayUpdate": 0,
+            grid: {
+                left: '7%',
+                right: '7%',
+                bottom: '3%',
+                containLabel: true
+            },
+            "series": [
+                {
+                    "type": "bar",
+                    "data": [
+                        7.69,
+                        7.46,
+                        7.3,
+                        7.27,
+                        7.23,
+                        7.22,
+                        6.9,
+                        6.85,
+                        6.65,
+                        6.6,
+                        6.59,
+                        6.41,
+                        6.39,
+                        6.29,
+                        6.18,
+                        6.12,
+                        5.99,
+                        5.97,
+                        5.9,
+                        5.69,
+                        5.65
+                    ],
+                    "barMinHeight": 0,
+                    "seriesLayoutBy": "column",
+                    "clip": true,
+                    "label": {
+                        "show": true,
+                        "position": "top",
+                        "color": "#f0efe7",
+                        "margin": 8
+                    }
+                }
+            ],
+            "legend": [
+                {
+                    "data": [
+                        "\u7c7b\u578b\u5e73\u5747\u5206"
+                    ],
+                    "selected": {
+                        "\u7c7b\u578b\u5e73\u5747\u5206": true
+                    }
+                }
+            ],
+            "tooltip": {
+                "show": true,
+                "trigger": "item",
+                "triggerOn": "mousemove|click",
+                "axisPointer": {
+                    "type": "line"
+                },
+                "showContent": true,
+                "alwaysShowContent": false,
+                "showDelay": 0,
+                "hideDelay": 100,
+                "textStyle": {
+                    "fontSize": 16
+                },
+                "borderWidth": 0,
+                "padding": 5
+            },
+            "xAxis": [
+                {
+                    "show": true,
+                    "scale": false,
+                    "nameLocation": "end",
+                    "nameGap": 15,
+                    "gridIndex": 0,
+                    "inverse": false,
+                    "offset": 0,
+                    "splitNumber": 5,
+                    "minInterval": 0,
+                    "splitLine": {
+                        "show": false,
+                        "lineStyle": {
+                            "show": true,
+                            "width": 1,
+                            "opacity": 1,
+                            "curveness": 0,
+                            "type": "solid"
+                        }
+                    },
+                    "data": [
+                        "\u97f3\u4e50",
+                        "\u540c\u6027",
+                        "\u52a8\u753b",
+                        "\u5bb6\u5ead",
+                        "\u5386\u53f2",
+                        "\u4f20\u8bb0",
+                        "\u5267\u60c5",
+                        "\u6218\u4e89",
+                        "\u559c\u5267",
+                        "\u513f\u7ae5",
+                        "\u72af\u7f6a",
+                        "\u5192\u9669",
+                        "\u7231\u60c5",
+                        "\u60ca\u609a",
+                        "\u79d1\u5e7b",
+                        "\u5947\u5e7b",
+                        "\u52a8\u4f5c",
+                        "\u60ac\u7591",
+                        "\u6050\u6016",
+                        "\u707e\u96be",
+                        "\u6b66\u4fa0"
+                    ]
+                }
+            ],
+            "yAxis": [
+                {
+                    "show": true,
+                    "min": 5.5,
+                    "scale": false,
+                    "nameLocation": "end",
+                    "nameGap": 15,
+                    "gridIndex": 0,
+                    "inverse": false,
+                    "offset": 0,
+                    "splitNumber": 5,
+                    "minInterval": 0,
+                    "splitLine": {
+                        "show": false,
+                        "lineStyle": {
+                            "show": true,
+                            "width": 1,
+                            "opacity": 1,
+                            "curveness": 0,
+                            "type": "solid"
+                        }
+                    }
+                }
+            ]
+        };
+        myChart.setOption(option);
+
+    </script>
+
+{% endblock %}

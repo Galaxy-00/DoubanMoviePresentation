@@ -1,3 +1,0 @@
-graft doubanShow/static
-graft doubanShow/templates
-global-exclude *.pyc

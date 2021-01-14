@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+
+<h1>{% block subtitle %}全球电影数量变化曲线{% endblock %}</h1>
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+    <style type="text/css">
+        #table{
+            width: 1200px;
+        }
+        #table div{
+            display: inline-block;
+        }
+        #scatter{
+            width: 1200px;
+            margin: 50px auto;
+        }
+        #type{
+        }
+        #type a{
+            display: inline-block;
+        }
+    </style>
+    <div id="table">
+        <div id="type">
+            <a id="scatter" style="width:1200px; height:500px;"></a>
+        </div>
+    </div>
+
+    <script>
+        var myChart = echarts.init(document.getElementById('scatter'),'customed', {renderer: 'canvas'})
+        var data = [
+            [1915, 1], [1916, 1], [1918, 1],
+            [1920, 1], [1921, 2], [1922, 1], [1923, 2], [1924, 3], [1925, 3], [1926, 1], [1927, 3], [1928, 4],
+            [1930, 2], [1931, 5], [1932, 3], [1933, 2], [1934, 4], [1935, 4], [1936, 2], [1937, 6], [1938, 1], [1939, 6],
+            [1940, 9], [1941, 6], [1942, 4], [1943, 1], [1944, 4], [1945, 3], [1946, 5], [1947, 5], [1948, 9], [1949, 6],
+            [1950, 5], [1951, 9], [1952, 12], [1953, 11], [1954, 13], [1955, 17], [1956, 13], [1957, 12], [1958, 12], [1959, 15],
+            [1960, 17], [1961, 16], [1962, 22], [1963, 22], [1964, 21], [1965, 18], [1966, 15], [1967, 19], [1968, 12], [1969, 18],
+            [1970, 14], [1971, 16], [1972, 18], [1973, 26], [1974, 22], [1975, 19], [1976, 20], [1977, 22], [1978, 25], [1979, 30],
+            [1980, 33], [1981, 30], [1982, 41], [1983, 40], [1984, 52], [1985, 64], [1986, 57], [1987, 72], [1988, 82], [1989, 79],
+            [1990, 81], [1991, 87], [1992, 110], [1993, 126], [1994, 108], [1995, 115], [1996, 110], [1997, 137], [1998, 130], [1999, 145],
+            [2000, 143], [2001, 172], [2002, 178], [2003, 192], [2004, 229], [2005, 223], [2006, 278], [2007, 279], [2008, 287], [2009, 344],
+            [2010, 372], [2011, 357], [2012, 367], [2013, 420], [2014, 440], [2015, 493], [2016, 548], [2017, 543], [2018, 521], [2019, 582],
+            [2020, 406]
+        ];
+
+        // See https://github.com/ecomfe/echarts-stat
+        var myRegression = ecStat.regression('polynomial', data, 3);
+
+        myRegression.points.sort(function(a, b) {
+            return a[0] - b[0];
+        });
+
+        option = {
+            background:'rgba(47, 47, 47, 0.6)',
+            dataZoom: [
+                {
+                    id: 'dataZoomX',
+                    type: 'inside',
+                    xAxisIndex: [0],
+                    filterMode: 'filter'
+                }
+            ],
+            tooltip: {
+                trigger: 'axis',
+                xAxisPointer: {
+                    show: true,
+                    type: 'cross',
+					lineStyle: {
+					    type: 'dashed',
+						width: 1
+					}
+				}
+            },
+            grid: {
+                left: '7%',
+                right: '7%',
+                bottom: '3%',
+                containLabel: true
+            },
+            title: {
+                text: '基于年份的电影数量变化曲线',
+                top: 16,
+                textStyle:{//图例文字的样式
+                    color:'#f0efe7',
+                    fontSize:20
+                }
+            },
+            legend: {
+                data: ['原曲线', '拟合曲线'],
+                textStyle:{//图例文字的样式
+                    color:'#f0efe7',
+                    fontSize:16
+                }
+            },
+            xAxis: {
+                min: 1910,
+                type: 'value',
+                splitLine: {
+                    lineStyle: {
+                        type: 'dashed'
+                    }
+                },
+                splitNumber: 20
+            },
+            yAxis: {
+                type: 'value',
+                min: 0,
+                splitLine: {
+                    lineStyle: {
+                        type: 'dashed'
+                    }
+                }
+            },
+            series: [
+                {
+                name: '拟合曲线',
+                type: 'line',
+                smooth: true,
+                showSymbol: false,
+                data: myRegression.points,
+                markPoint: {
+                    itemStyle: {
+                        color: 'transparent'
+                    },
+                    label: {
+                        show: true,
+                        position: 'left',
+                        formatter: myRegression.expression,
+                        color: '#333',
+                        fontSize: 14,
+                        top: 20
+                    },
+                    data: [{
+                        coord: myRegression.points[myRegression.points.length - 1]
+                    }]
+                }
+            },
+            {
+                name: '原曲线',
+                data: data,
+                type: 'line',
+                smooth: true
+            }]
+        };
+        myChart.setOption(option);
+        
+    </script>
+
+{% endblock %}

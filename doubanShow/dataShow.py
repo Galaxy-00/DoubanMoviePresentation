@@ -6,11 +6,36 @@ bp = Blueprint('show', __name__, url_prefix='/show')
 
 
 # 返回对应页面
-@bp.route('/bar')
-def get_bar():
-    return render_template('show/chartShow.html')
+@bp.route('/table')
+def get_table():
+    return render_template('show/table.html')
 
 
-@bp.route("/dynData")
-def dynData():
-    return render_template("show/dynamicData.html")
+@bp.route('/oneFunc')
+def get_one():
+    return render_template('show/oneFunc.html')
+
+
+@bp.route("/twoFunc")
+def get_two():
+    return render_template("show/twoFunc.html")
+
+
+@bp.route("/threeFunc")
+def get_three():
+    return render_template("show/threeFunc.html")
+
+
+@bp.route("/fourFunc")
+def get_four():
+    return render_template("show/fourFunc.html")
+
+
+@bp.route("/fiveFunc")
+def get_five():
+    return render_template("show/fiveFunc.html")
+
+
+@bp.route("/sixFunc")
+def get_six():
+    return render_template("show/sixFunc.html")
